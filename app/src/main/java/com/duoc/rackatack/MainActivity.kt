@@ -11,8 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+
 import com.duoc.rackatack.ui.theme.Login
 import com.duoc.rackatack.ui.theme.Navegacion
+
 import com.duoc.rackatack.ui.theme.RackAtackTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +23,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RackAtackTheme {
+
                 Navegacion()
+
+
+               
 
             }
         }

@@ -6,7 +6,11 @@ plugins {
 android {
     namespace = "com.duoc.rackatack"
     compileSdk {
+<<<<<<< HEAD
         version = release(37) {
+=======
+        version = release(36) {
+>>>>>>> e27d479a5212c85c543ea1e8f2724748ede07aae
             minorApiLevel = 1
         }
     }
@@ -38,8 +42,11 @@ android {
 }
 
 dependencies {
+<<<<<<< HEAD
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.navigation:navigation-compose:2.8.4")
+=======
+>>>>>>> e27d479a5212c85c543ea1e8f2724748ede07aae
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
