@@ -139,7 +139,7 @@ fun RegistroAntecedentes(navController: NavController){
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate("captura_evidencia") },
+            onClick = { navController.navigate("camara") },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "📸 Continuar a Captura de fotografía")

@@ -19,10 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
+import androidx.navigation.NavController
 import java.io.File
 
 @Composable
-fun Camara() {
+fun Camara(navController: NavController) {
     val context = LocalContext.current
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -55,7 +56,7 @@ fun Camara() {
     }
 
     Column(
-        modifier = Modifier.fillMaxWidth().padding(32.dp),
+        modifier = Modifier.fillMaxSize().padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -72,6 +73,13 @@ fun Camara() {
         } ){
             Text("Tomar foto de Rack")
         }
+
         Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {navController.navigate("antecedentes")})
+        {
+            Text("Ir al Reconocimiento de Componentes")
+        }
+
+
     }
 }

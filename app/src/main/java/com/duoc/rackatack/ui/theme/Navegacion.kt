@@ -12,6 +12,7 @@ fun  Navegacion () {
         composable("registro"){RegistroAntecedentes(navController)}
         composable("antecedentes"){ReconocimientoAntecedentes(navController)}
         composable ("detalle"){DetalleLevantamiento(navController)}
+        composable("camara"){Camara(navController)}
         }
 
     }
