@@ -143,7 +143,7 @@ fun ReconocimientoAntecedentes(navController: NavController){
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { navController.navigate("captura_evidencia") },
+                onClick = { navController.navigate("detalle") },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Validar y Guardar")
