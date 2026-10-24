@@ -8,6 +8,9 @@ class LevantamientoRepository {
         Levantamiento("Rack-DC-01","13-OCT-2026","Maria Urrutia","Valido"),
         Levantamiento("Rack-DC-01","13-OCT-2026","Alan Alfaro","Valido"),
         Levantamiento("Rack-DC-01","13-OCT-2026","Maria Urrutia","Valido"),
+        Levantamiento("Rack-DC-01","13-OCT-2026","Alan Alfaro","En Espera"),
+        Levantamiento("Rack-DC-01","13-OCT-2026","Maria Urrutia","Valido"),
+        Levantamiento("Rack-DC-01","13-OCT-2026","Alan Alfaro","Valido")
 
 
     )

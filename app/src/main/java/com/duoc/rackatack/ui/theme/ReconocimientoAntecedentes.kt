@@ -34,7 +34,7 @@ fun ReconocimientoAntecedentes(navController: NavController){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            onClick = { navController.popBackStack() },
+            onClick = { navController.navigate("inicio") },
             modifier = Modifier.align(Alignment.Start)
         ) {
             Text("Volver")
