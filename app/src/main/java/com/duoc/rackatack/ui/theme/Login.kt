@@ -1,5 +1,6 @@
 package com.duoc.rackatack.ui.theme
-
+import com.duoc.rackatack.R
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -19,7 +20,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -28,12 +29,19 @@ fun Login(navController: NavController) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var modal by remember { mutableStateOf(false)}
+
     Column(
         modifier = Modifier.fillMaxSize().background(Color(0xFFBBDEFB)).padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
 
     ){
+        Image(
+            painter = painterResource(id= R.drawable.cmc360_logo),
+            contentDescription = "logoEmpresa",
+            modifier = Modifier.width(200.dp).height(200.dp).padding(bottom = 30.dp)
+        )
+
         Text(text = "Correo Institucional")
 
         OutlinedTextField(
