@@ -9,5 +9,5 @@ fun  Navegacion () {
     NavHost(navController, startDestination = "login"){
         composable ("login"){Login(navController)}
         composable("inicio"){InicioLevantamiento(navController)}
+        composable("registro"){RegistroAntecedentes(navController)}}
     }
-}
