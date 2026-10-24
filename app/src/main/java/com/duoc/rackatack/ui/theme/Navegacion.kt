@@ -6,8 +6,11 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun  Navegacion () {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = "login"){
+    NavHost(navController, startDestination = "antecedentes"){
         composable ("login"){Login(navController)}
         composable("inicio"){InicioLevantamiento(navController)}
-        composable("registro"){RegistroAntecedentes(navController)}}
+        composable("registro"){RegistroAntecedentes(navController)}
+        composable("antecedentes"){ReconocimientoAntecedentes(navController)}
+    }
+
     }
