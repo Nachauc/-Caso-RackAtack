@@ -14,9 +14,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,7 +48,14 @@ fun DetalleLevantamiento(navController: NavController) {
             onClick = { navController.popBackStack() },
             modifier = Modifier.align(Alignment.Start)
         ) {
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "volver"
+                )
+            }
             Text("Volver")
+
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -94,12 +107,25 @@ fun DetalleLevantamiento(navController: NavController) {
                 modifier = Modifier.weight(1f)
             ){
                 Text("Volver al Inicio")
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Default.Home,
+                        contentDescription = "home"
+                    )
+                }
             }
             Button(
                 onClick = { },
                 modifier = Modifier.weight(1f)
             ){
-                Text("Exportar y compartir")
+                Text("Exportar ")
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "compartir"
+                    )
+                }
+
             }
         }
     }
