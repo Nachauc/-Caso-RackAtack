@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +37,7 @@ fun RegistroAntecedentes(navController: NavController){
     var fecha by remember { mutableStateOf("") }
     var responsable by remember { mutableStateOf("") }
     var observaciones by remember { mutableStateOf("") }
+    var modal by remember { mutableStateOf(false)}
 
     Column(
         modifier = Modifier
@@ -46,7 +51,14 @@ fun RegistroAntecedentes(navController: NavController){
             onClick = { navController.popBackStack() },
             modifier = Modifier.align(Alignment.Start)
         ) {
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "volver"
+                )
+            }
             Text("Volver")
+
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -141,10 +153,29 @@ fun RegistroAntecedentes(navController: NavController){
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate("camara") },
+            onClick = {
+                if (idRack.isBlank() || fecha.isBlank() || responsable.isBlank() || observaciones.isBlank()) {
+                    modal = true
+                } else {
+                    navController.navigate("camara")
+                }
+            },
             modifier = Modifier.fillMaxWidth()
-        ) {
+        ){
             Text(text = "📸 Continuar a Captura de fotografía")
+        }
+
+        if(modal){
+            androidx.compose.material3.AlertDialog(
+                onDismissRequest = { modal = false },
+                title = { Text(text = "Faltan datos.")},
+                text = { Text(text = "Por favor, completa todos los campos para continuar.")},
+                confirmButton = {
+                    Button(onClick = { modal = false }) {
+                        Text(text = "Aceptar")
+                    }
+                }
+            )
         }
 
     }

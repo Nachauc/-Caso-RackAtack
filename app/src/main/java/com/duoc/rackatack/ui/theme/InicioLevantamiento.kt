@@ -48,10 +48,10 @@ fun InicioLevantamiento(navController: NavController,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Button(
-                onClick = { navController.popBackStack() },
+                onClick = { navController.navigate("login") },
                 modifier = Modifier.padding(16.dp)
             ) {
-                Text("Volver")
+                Text("Salir")
             }
                 Row{
                     IconButton(onClick = {}) {

@@ -68,38 +68,29 @@ fun Login(navController: NavController) {
         Spacer(modifier = Modifier.height(42.dp))
 
         Button(
-            onClick = {navController.navigate("inicio")},
+            onClick = {
+                if (username.isBlank() || password.isBlank()) {
+                    modal = true
+                }else{
+                    navController.navigate("inicio")
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text ="Ingresar")
         }
-        //if(modal){
-           // AlertDialog(
-               // onDismissRequest = {modal = false},
-               // title = {Text("Mensaje")},
-               // text ={Text ("se debe crear el usuario :$username con la contraseña: $password")},
-               // confirmButton = {
-                   // Button(onClick = {modal = false}) {
-                     //   Text("ok")
-                   // }
-               // }
-            //)
-        //}
+
+        if(modal){
+            androidx.compose.material3.AlertDialog(
+                onDismissRequest = { modal = false },
+                title = { Text(text = "Faltan datos.")},
+                    text = { Text(text = "Por favor, ingrese su correo y contraseña.")},
+                    confirmButton = {
+                        Button(onClick = { modal = false }) {
+                            Text(text = "Aceptar")
+                        }
+                    }
+            )
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
