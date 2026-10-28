@@ -1,7 +1,9 @@
 package com.duoc.rackatack.ui.theme
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,8 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -30,14 +35,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun RegistroAntecedentes(navController: NavController){
+
+    val fechaDeHoy = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()) }
+    var fecha by remember { mutableStateOf(fechaDeHoy) }
     var idRack by remember { mutableStateOf("") }
-    var fecha by remember { mutableStateOf("") }
     var responsable by remember { mutableStateOf("") }
     var observaciones by remember { mutableStateOf("") }
     var modal by remember { mutableStateOf(false)}
+    val opciones = listOf("Alan Alfaro", "Maria Ignacia Urrutia")
+    var expandido by remember { mutableStateOf(false) }
+    var seleccionado by remember { mutableStateOf("Selecciona un encargado") }
 
     Column(
         modifier = Modifier
@@ -86,18 +99,51 @@ fun RegistroAntecedentes(navController: NavController){
 
                 OutlinedTextField(
                     value = fecha,
-                    onValueChange = {nuevoTexto -> fecha = nuevoTexto},
+                    onValueChange = {},
                     label = {Text("Fecha")},
+                    readOnly = true,
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 Spacer(modifier = Modifier.height(16.dp))
 
-                OutlinedTextField(
-                    value = responsable,
-                    onValueChange = {nuevoTexto -> responsable = nuevoTexto},
-                    label = {Text("Responsable")},
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    OutlinedTextField(
+                        value = seleccionado,
+                        onValueChange = {},
+                        label = { Text("Encargado") },
+                        readOnly = true,
+                        trailingIcon = {
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Desplegar")
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { expandido = true }
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .matchParentSize()
+                            .clickable { expandido = true }
+                    )
+
+                    DropdownMenu(
+                        expanded = expandido,
+                        onDismissRequest = { expandido = false },
+                        modifier = Modifier.fillMaxWidth(0.9f)
+                    ) {
+                        opciones.forEach { opcion ->
+                            DropdownMenuItem(
+                                text = { Text(opcion) },
+                                onClick = {
+                                    seleccionado = opcion
+                                    responsable = opcion
+                                    expandido = false
+                                }
+                            )
+                        }
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
