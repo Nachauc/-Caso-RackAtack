@@ -1,4 +1,5 @@
 package com.duoc.rackatack.ui.theme
+import android.content.Context
 import com.duoc.rackatack.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,15 +21,25 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun Login(navController: NavController) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var modal by remember { mutableStateOf(false)}
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("mispreferencias", Context.MODE_PRIVATE)
+    var isLoading by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+
+
 
     Column(
         modifier = Modifier.fillMaxSize().background(Color(0xFFBBDEFB)).padding(16.dp),
@@ -63,23 +74,36 @@ fun Login(navController: NavController) {
                 password = nuevoTexto
             },
             label = {Text("Introduce tu contraseña")},
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(42.dp))
 
-        Button(
+        BotonCargando(
+            texto = "Ingresar",
+            cargando = isLoading,
             onClick = {
                 if (username.isBlank() || password.isBlank()) {
                     modal = true
-                }else{
-                    navController.navigate("inicio")
+                } else {
+                    isLoading = true
+                    scope.launch {
+                        delay(2000)
+                        isLoading = true
+                        val editor = sharedPreferences.edit()
+                        editor.putBoolean("isLoggedIn", true)
+                        editor.apply()
+
+                        navController.navigate("inicio") {
+                            popUpTo("Login") { inclusive = true }
+                        }
+
+                    }
+
                 }
             },
             modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text ="Ingresar")
-        }
-
+        )
         if(modal){
             androidx.compose.material3.AlertDialog(
                 onDismissRequest = { modal = false },
