@@ -1,4 +1,5 @@
 package com.duoc.rackatack.ui.theme
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -27,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -35,6 +38,9 @@ import com.duoc.rackatack.viewmodel.LevantamientoViewModel
 @Composable
 fun InicioLevantamiento(navController: NavController,
     viewModel: LevantamientoViewModel = viewModel()) {
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("mispreferencias", Context.MODE_PRIVATE)
+
 
     Box(
         modifier = Modifier
@@ -47,11 +53,21 @@ fun InicioLevantamiento(navController: NavController,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Button(
-                onClick = { navController.navigate("login") },
-                modifier = Modifier.padding(16.dp)
+                Button(onClick = {
+                    sharedPreferences.edit().putBoolean("isLoggedIn",false).apply()
+                    navController.navigate("login"){
+                        popUpTo("inicio"){inclusive = true}
+                    }
+                },
+                    modifier = Modifier.padding(16.dp)
             ) {
-                Text("Salir")
+                    IconButton(onClick = {}) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "volver"
+                        )
+                    }
+                    Text("Salir")
             }
                 Row{
                     IconButton(onClick = {}) {

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -169,6 +170,12 @@ fun ReconocimientoAntecedentes(navController: NavController){
                 onClick = { navController.navigate("detalle") },
                 modifier = Modifier.fillMaxWidth()
             ) {
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "validar y guardar"
+                    )
+                }
                 Text(text = "Validar y Guardar")
             }
         }
