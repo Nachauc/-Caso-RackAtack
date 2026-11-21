@@ -34,13 +34,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.duoc.rackatack.viewmodel.LevantamientoViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun RegistroAntecedentes(navController: NavController){
+fun RegistroAntecedentes(navController: NavController,
+                         viewModel: LevantamientoViewModel = viewModel()){
 
     val fechaDeHoy = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()) }
     var fecha by remember { mutableStateOf(fechaDeHoy) }
@@ -90,7 +93,7 @@ fun RegistroAntecedentes(navController: NavController){
             ) {
                 OutlinedTextField(
                     value = idRack,
-                    onValueChange = {nuevoTexto -> idRack = nuevoTexto},
+                    onValueChange = {idRack = it},
                     label = {Text("ID Rack")},
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -149,7 +152,7 @@ fun RegistroAntecedentes(navController: NavController){
 
                 OutlinedTextField(
                     value = observaciones,
-                    onValueChange = {nuevoTexto -> observaciones = nuevoTexto},
+                    onValueChange = {observaciones = it},
                     label = {Text("Nota de Inspección")},
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -203,6 +206,10 @@ fun RegistroAntecedentes(navController: NavController){
                 if (idRack.isBlank() || fecha.isBlank() || responsable.isBlank() || observaciones.isBlank()) {
                     modal = true
                 } else {
+                    viewModel.tempRackId = idRack
+                    viewModel.tempFecha = fecha
+                    viewModel.tempInspector = responsable
+                    viewModel.tempObservaciones = observaciones
                     navController.navigate("camara")
                 }
             },

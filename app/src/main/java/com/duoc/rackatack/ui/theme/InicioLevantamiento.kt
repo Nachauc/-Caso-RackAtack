@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -72,6 +73,12 @@ fun InicioLevantamiento(navController: NavController,
                     }
                     Text("Salir")
             }
+                Text(
+                    text = "Inicio",
+                    modifier = Modifier.padding(16.dp),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
                 Row{
                     IconButton(onClick = {}) {
                         Icon(
@@ -94,9 +101,13 @@ fun InicioLevantamiento(navController: NavController,
                         )
                     }
                 }
-
-
             }
+            Text(
+                text = "Todos los Levantamientos",
+                modifier = Modifier.padding(16.dp),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
 
 
             LazyColumn(

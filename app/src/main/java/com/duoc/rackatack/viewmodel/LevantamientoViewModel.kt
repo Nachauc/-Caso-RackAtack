@@ -18,6 +18,11 @@ class LevantamientoViewModel : ViewModel() {
     private val _racks = MutableStateFlow<List<Rack>>(emptyList())
     val racks: StateFlow<List<Rack>> = _racks
 
+    var tempRackId: String = ""
+    var tempFecha: String = ""
+    var tempInspector: String = ""
+    var tempObservaciones: String = ""
+
     init {
         cargarLevantamientos()
         cargarRacks()
