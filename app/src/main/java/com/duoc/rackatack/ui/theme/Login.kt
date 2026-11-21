@@ -95,7 +95,7 @@ fun Login(navController: NavController) {
                         editor.apply()
 
                         navController.navigate("inicio") {
-                            popUpTo("Login") { inclusive = true }
+                            popUpTo("login") { inclusive = true }
                         }
 
                     }

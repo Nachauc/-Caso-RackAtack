@@ -43,7 +43,7 @@ import androidx.activity.compose.LocalActivity
 fun InicioLevantamiento(navController: NavController,
                         viewModel: LevantamientoViewModel = viewModel(LocalActivity.current as ComponentActivity)) {
     val context = LocalContext.current
-    val sharedPreferences = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE)
+    val sharedPreferences = context.getSharedPreferences("mispreferencias", Context.MODE_PRIVATE)
     val listaLevantamientos by viewModel.levantamientos.collectAsState()
 
 
