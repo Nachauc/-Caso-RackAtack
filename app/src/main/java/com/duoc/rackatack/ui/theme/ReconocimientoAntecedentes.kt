@@ -2,6 +2,7 @@ package com.duoc.rackatack.ui.theme
 
 import android.Manifest
 import android.os.Build
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.duoc.rackatack.R
@@ -46,10 +47,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.duoc.rackatack.models.Levantamiento
 import com.duoc.rackatack.viewmodel.LevantamientoViewModel
-
+import androidx.activity.compose.LocalActivity
 @Composable
 fun ReconocimientoAntecedentes(navController: NavController,
-                               viewModel: LevantamientoViewModel = viewModel()){
+                               viewModel: LevantamientoViewModel = viewModel(LocalActivity.current as ComponentActivity)){
     val context = LocalContext.current
 
     val permisoNotificacionLauncher = rememberLauncherForActivityResult(

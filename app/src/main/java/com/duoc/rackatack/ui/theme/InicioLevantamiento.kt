@@ -1,5 +1,6 @@
 package com.duoc.rackatack.ui.theme
 import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,7 +30,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -38,9 +38,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.duoc.rackatack.models.Levantamiento
 import com.duoc.rackatack.viewmodel.LevantamientoViewModel
+import androidx.activity.compose.LocalActivity
 @Composable
 fun InicioLevantamiento(navController: NavController,
-    viewModel: LevantamientoViewModel = viewModel()) {
+                        viewModel: LevantamientoViewModel = viewModel(LocalActivity.current as ComponentActivity)) {
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE)
     val listaLevantamientos by viewModel.levantamientos.collectAsState()

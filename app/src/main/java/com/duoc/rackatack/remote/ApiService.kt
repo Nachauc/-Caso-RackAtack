@@ -10,30 +10,30 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
-    @GET("levantamientos")
+    @GET("levantamiento")
     suspend fun getLevantamientos(): List<Levantamiento>
 
 
-    @GET("levantamientos/{id}")
+    @GET("levantamiento/{id}")
     suspend fun getLevantamientoPorId(@Path("id") id: Int): Levantamiento
 
 
-    @POST("levantamientos")
+    @POST("levantamiento")
     suspend fun crearLevantamiento(@Body levantamiento: Levantamiento): Levantamiento
 
 
-    @PUT("levantamientos/{id}")
+    @PUT("levantamiento/{id}")
     suspend fun actualizarLevantamiento(@Path("id") id: Int, @Body levantamiento: Levantamiento): Levantamiento
 
 
-    @DELETE("levantamientos/{id}")
+    @DELETE("levantamiento/{id}")
     suspend fun eliminarLevantamiento(@Path("id") id: Int)
 
 
-    @GET("racks")
+    @GET("rack")
     suspend fun getRacks(): List<Rack>
 
 
-    @POST("racks")
+    @POST("rack")
     suspend fun crearRack(@Body rack: Rack): Rack
 }

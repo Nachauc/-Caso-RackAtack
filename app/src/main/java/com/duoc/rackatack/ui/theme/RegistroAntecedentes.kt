@@ -1,5 +1,6 @@
 package com.duoc.rackatack.ui.theme
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,10 +41,10 @@ import com.duoc.rackatack.viewmodel.LevantamientoViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
+import androidx.activity.compose.LocalActivity
 @Composable
 fun RegistroAntecedentes(navController: NavController,
-                         viewModel: LevantamientoViewModel = viewModel()){
+                         viewModel: LevantamientoViewModel = viewModel(LocalActivity.current as ComponentActivity)){
 
     val fechaDeHoy = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()) }
     var fecha by remember { mutableStateOf(fechaDeHoy) }

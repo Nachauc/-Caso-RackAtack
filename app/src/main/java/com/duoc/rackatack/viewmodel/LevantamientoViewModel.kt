@@ -1,5 +1,6 @@
 package com.duoc.rackatack.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.duoc.rackatack.models.Levantamiento
@@ -32,7 +33,9 @@ class LevantamientoViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _levantamientos.value = repository.obtenerLevantamientos()
+                Log.d("API", "Cargados: ${_levantamientos.value.size}")
             } catch (e: Exception) {
+                Log.e("API", "Error: ${e.message}")
             }
         }
     }
@@ -42,6 +45,7 @@ class LevantamientoViewModel : ViewModel() {
             try {
                 _racks.value = repository.obtenerRacks()
             } catch (e: Exception) {
+
             }
         }
     }
