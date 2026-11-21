@@ -24,6 +24,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -39,7 +41,8 @@ import com.duoc.rackatack.viewmodel.LevantamientoViewModel
 fun InicioLevantamiento(navController: NavController,
     viewModel: LevantamientoViewModel = viewModel()) {
     val context = LocalContext.current
-    val sharedPreferences = context.getSharedPreferences("mispreferencias", Context.MODE_PRIVATE)
+    val sharedPreferences = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE)
+    val listaLevantamientos by viewModel.levantamientos.collectAsState()
 
 
     Box(
@@ -100,7 +103,7 @@ fun InicioLevantamiento(navController: NavController,
                 contentPadding = PaddingValues(30.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(viewModel.levantamientos) { LevantamientoCard(it) }
+                items(listaLevantamientos) { LevantamientoCard(it) }
             }
         }
 
