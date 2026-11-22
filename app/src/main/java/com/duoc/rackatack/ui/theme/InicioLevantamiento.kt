@@ -167,7 +167,7 @@ fun LevantamientoCard(item: Levantamiento, onEliminar: () -> Unit,
 
             Row {
                 TextButton(onClick = { editando = true }) { Text("Editar") }
-                TextButton(onClick = onEliminar) { Text("Eliminar") }
+                TextButton(onClick = {confirmandoEliminar= true}) { Text("Eliminar") }
             }
         }
     }
@@ -192,6 +192,22 @@ fun LevantamientoCard(item: Levantamiento, onEliminar: () -> Unit,
             },
             dismissButton = {
                 TextButton(onClick = { editando = false }) { Text("Cancelar") }
+            }
+        )
+    }
+    if (confirmandoEliminar) {
+        AlertDialog(
+            onDismissRequest = { confirmandoEliminar = false },
+            title = { Text("Eliminar levantamiento") },
+            text = { Text("¿Seguro que quieres eliminar este levantamiento?") },
+            confirmButton = {
+                Button(onClick = {
+                    onEliminar()
+                    confirmandoEliminar = false
+                }) { Text("Eliminar") }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmandoEliminar = false }) { Text("Cancelar") }
             }
         )
     }
