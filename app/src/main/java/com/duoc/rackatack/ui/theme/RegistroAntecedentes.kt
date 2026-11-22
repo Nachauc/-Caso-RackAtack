@@ -55,6 +55,9 @@ fun RegistroAntecedentes(navController: NavController,
     val opciones = listOf("Alan Alfaro", "Maria Ignacia Urrutia")
     var expandido by remember { mutableStateOf(false) }
     var seleccionado by remember { mutableStateOf("Selecciona un encargado") }
+    val opcionesEstado = listOf("En revisión","Revisado","Sin revisar")
+    var expandidoEstado by remember { mutableStateOf(false) }
+    var estadoSeleccionado by remember { mutableStateOf("Selecciona un estado") }
 
     Column(
         modifier = Modifier
@@ -151,12 +154,37 @@ fun RegistroAntecedentes(navController: NavController,
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                OutlinedTextField(
-                    value = observaciones,
-                    onValueChange = {observaciones = it},
-                    label = {Text("Nota de Inspección")},
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Box(modifier = Modifier.fillMaxWidth()){
+                    OutlinedTextField(
+                        value = estadoSeleccionado,
+                        onValueChange = {},
+                        label = {Text("Estado")},
+                        readOnly = true,
+                        trailingIcon = {
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Desplegar")
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Box(
+                        modifier = Modifier.matchParentSize().clickable{expandidoEstado= true}
+                    )
+                    DropdownMenu(
+                        expanded =  expandidoEstado,
+                        onDismissRequest = {expandidoEstado = false},
+                        modifier = Modifier.fillMaxWidth(0.9f)
+                    ) {
+                        opcionesEstado.forEach { opcion ->
+                            DropdownMenuItem(
+                                text = {Text(opcion)},
+                                onClick = {
+                                    estadoSeleccionado = opcion
+                                    observaciones = opcion
+                                    expandidoEstado = false
+                                }
+                            )
+                        }
+                    }
+                }
             }
         }
 
