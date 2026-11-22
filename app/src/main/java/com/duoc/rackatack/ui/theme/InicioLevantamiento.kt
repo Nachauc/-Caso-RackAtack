@@ -39,6 +39,14 @@ import androidx.navigation.NavController
 import com.duoc.rackatack.models.Levantamiento
 import com.duoc.rackatack.viewmodel.LevantamientoViewModel
 import androidx.activity.compose.LocalActivity
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+
+
 @Composable
 fun InicioLevantamiento(navController: NavController,
                         viewModel: LevantamientoViewModel = viewModel(LocalActivity.current as ComponentActivity)) {
@@ -115,7 +123,13 @@ fun InicioLevantamiento(navController: NavController,
                 contentPadding = PaddingValues(30.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(listaLevantamientos) { LevantamientoCard(it) }
+                items(listaLevantamientos) { item -> LevantamientoCard(
+                    item = item,
+                    onEliminar = {item.id?.let{viewModel.eliminarLevantamiento(it)}},
+                    onEditar = {editado -> item.id?.let{viewModel.actualizarLevantamiento(it,editado)}}
+                )
+                }
+
             }
         }
 
@@ -135,13 +149,51 @@ fun InicioLevantamiento(navController: NavController,
 
 
 @Composable
-fun LevantamientoCard(item: Levantamiento){
-    Card(modifier = Modifier.fillMaxWidth()){
+fun LevantamientoCard(item: Levantamiento, onEliminar: () -> Unit,
+                      onEditar: (Levantamiento) -> Unit){
+    var editando by remember { mutableStateOf(false) }
+    var rackId by remember { mutableStateOf(item.rackId) }
+    var fecha by remember { mutableStateOf(item.fecha) }
+    var inspector by remember { mutableStateOf(item.inspector) }
+    var estado by remember { mutableStateOf(item.estado) }
+    var confirmandoEliminar by remember { mutableStateOf(false) }
+
+    Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text("Rack ID: ${item.rackId}")
             Text("Fecha: ${item.fecha}")
             Text("Inspector: ${item.inspector}")
             Text("Estado: ${item.estado}")
+
+            Row {
+                TextButton(onClick = { editando = true }) { Text("Editar") }
+                TextButton(onClick = onEliminar) { Text("Eliminar") }
+            }
         }
     }
+
+    if (editando) {
+        AlertDialog(
+            onDismissRequest = { editando = false },
+            title = { Text("Editar levantamiento") },
+            text = {
+                Column {
+                    OutlinedTextField(value = rackId, onValueChange = { rackId = it }, label = { Text("Rack ID") })
+                    OutlinedTextField(value = fecha, onValueChange = { fecha = it }, label = { Text("Fecha") })
+                    OutlinedTextField(value = inspector, onValueChange = { inspector = it }, label = { Text("Inspector") })
+                    OutlinedTextField(value = estado, onValueChange = { estado = it }, label = { Text("Estado") })
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    onEditar(item.copy(rackId = rackId, fecha = fecha, inspector = inspector, estado = estado))
+                    editando = false
+                }) { Text("Guardar") }
+            },
+            dismissButton = {
+                TextButton(onClick = { editando = false }) { Text("Cancelar") }
+            }
+        )
+    }
+
 }

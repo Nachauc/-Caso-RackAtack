@@ -218,7 +218,8 @@ fun ReconocimientoAntecedentes(navController: NavController,
                         rackId = viewModel.tempRackId,
                         fecha = viewModel.tempFecha,
                         inspector = viewModel.tempInspector,
-                        estado = "Valido"
+                        estado = viewModel.tempObservaciones
+
                     )
                     viewModel.guardarLevantamiento(nuevoRegistro)
 

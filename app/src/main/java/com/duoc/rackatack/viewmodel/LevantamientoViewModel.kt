@@ -33,9 +33,8 @@ class LevantamientoViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _levantamientos.value = repository.obtenerLevantamientos()
-                Log.d("API", "Cargados: ${_levantamientos.value.size}")
             } catch (e: Exception) {
-                Log.e("API", "Error: ${e.message}")
+
             }
         }
     }
@@ -56,7 +55,33 @@ class LevantamientoViewModel : ViewModel() {
                 repository.crearLevantamiento(nuevoLevantamiento)
                 cargarLevantamientos()
             } catch (e: Exception) {
+                Log.e("API", "Error: ${e.message}")
             }
         }
     }
+
+    fun eliminarLevantamiento(id: Int) {
+        viewModelScope.launch {
+            try {
+                repository.eliminarLevantamiento(id)
+                cargarLevantamientos()
+            } catch (e: Exception) {
+                Log.e("API", "Error: ${e.message}")
+
+            }
+        }
+    }
+
+    fun actualizarLevantamiento(id: Int, levantamiento: Levantamiento) {
+        viewModelScope.launch {
+            try {
+                repository.actualizarLevantamiento(id, levantamiento)
+                cargarLevantamientos()
+            } catch (e: Exception) {
+                Log.e("API", "Error: ${e.message}")
+
+            }
+        }
+    }
+
 }
