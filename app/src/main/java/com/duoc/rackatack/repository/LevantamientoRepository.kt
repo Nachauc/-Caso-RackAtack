@@ -2,34 +2,35 @@ package com.duoc.rackatack.repository
 
 import com.duoc.rackatack.models.Levantamiento
 import com.duoc.rackatack.models.Rack
+import com.duoc.rackatack.remote.ApiService
 import com.duoc.rackatack.remote.RetrofitInstance
 
-class LevantamientoRepository {
+class LevantamientoRepository(private val api: ApiService = RetrofitInstance.api) {
     suspend fun obtenerLevantamientos(): List<Levantamiento> {
-        return RetrofitInstance.api.getLevantamientos()
+        return api.getLevantamientos()
     }
 
     suspend fun obtenerLevantamientoPorId(id: Int): Levantamiento {
-        return RetrofitInstance.api.getLevantamientoPorId(id)
+        return api.getLevantamientoPorId(id)
     }
 
     suspend fun crearLevantamiento(levantamiento: Levantamiento): Levantamiento {
-        return RetrofitInstance.api.crearLevantamiento(levantamiento)
+        return api.crearLevantamiento(levantamiento)
     }
 
     suspend fun actualizarLevantamiento(id: Int, levantamiento: Levantamiento): Levantamiento {
-        return RetrofitInstance.api.actualizarLevantamiento(id, levantamiento)
+        return api.actualizarLevantamiento(id, levantamiento)
     }
 
     suspend fun eliminarLevantamiento(id: Int) {
-        RetrofitInstance.api.eliminarLevantamiento(id)
+        api.eliminarLevantamiento(id)
     }
 
     suspend fun obtenerRacks(): List<Rack> {
-        return RetrofitInstance.api.getRacks()
+        return api.getRacks()
     }
 
     suspend fun crearRack(rack: Rack): Rack {
-        return RetrofitInstance.api.crearRack(rack)
+        return api.crearRack(rack)
     }
 }

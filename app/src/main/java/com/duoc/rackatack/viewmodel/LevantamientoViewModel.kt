@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class LevantamientoViewModel : ViewModel() {
-    private val repository = LevantamientoRepository()
+class LevantamientoViewModel(private val repository: LevantamientoRepository = LevantamientoRepository()) : ViewModel() {
+
 
     private val _levantamientos = MutableStateFlow<List<Levantamiento>>(emptyList())
     val levantamientos: StateFlow<List<Levantamiento>> = _levantamientos
