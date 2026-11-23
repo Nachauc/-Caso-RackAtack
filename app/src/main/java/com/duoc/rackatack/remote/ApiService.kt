@@ -1,7 +1,6 @@
 package com.duoc.rackatack.remote
 
 import com.duoc.rackatack.models.Levantamiento
-import com.duoc.rackatack.models.Rack
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

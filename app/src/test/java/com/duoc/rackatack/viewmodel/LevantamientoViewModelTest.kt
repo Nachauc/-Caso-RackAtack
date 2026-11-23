@@ -1,6 +1,5 @@
 package com.duoc.rackatack.viewmodel
 import com.duoc.rackatack.models.Levantamiento
-import com.duoc.rackatack.models.Rack
 import com.duoc.rackatack.remote.ApiService
 import com.duoc.rackatack.repository.LevantamientoRepository
 import kotlinx.coroutines.Dispatchers
@@ -39,12 +38,10 @@ class LevantamientoViewModelTest {
         )
         val apiFalsa = object : ApiService {
             override suspend fun getLevantamientos() = lista
-            override suspend fun getRacks() = emptyList<Rack>()
             override suspend fun getLevantamientoPorId(id: Int) = lista[0]
             override suspend fun crearLevantamiento(levantamiento: Levantamiento) = levantamiento
             override suspend fun actualizarLevantamiento(id: Int, levantamiento: Levantamiento) = levantamiento
             override suspend fun eliminarLevantamiento(id: Int) {}
-            override suspend fun crearRack(rack: Rack) = rack
         }
         val viewModel = LevantamientoViewModel(LevantamientoRepository(apiFalsa))
 

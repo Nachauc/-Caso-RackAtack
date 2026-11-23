@@ -11,4 +11,12 @@ object RetrofitInstance {
             .build()
             .create(ApiService::class.java)
     }
+
+    val apiUsuarios: ApiServiceUsuario by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://x8ki-letl-twmt.n7.xano.io/api:lRLeBNOy/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiServiceUsuario::class.java)
+    }
 }

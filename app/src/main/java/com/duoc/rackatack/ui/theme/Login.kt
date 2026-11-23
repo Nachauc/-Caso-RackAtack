@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,42 +27,48 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.duoc.rackatack.viewmodel.UsuarioViewModel
 
 @Composable
-fun Login(navController: NavController) {
+fun Login(
+    navController: NavController,
+    usuarioViewModel: UsuarioViewModel = viewModel()
+) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var modal by remember { mutableStateOf(false)}
+    var modal by remember { mutableStateOf(false) }
+    var mensajeError by remember { mutableStateOf("Por favor, ingrese su correo y contraseña.") }
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences("mispreferencias", Context.MODE_PRIVATE)
     var isLoading by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
-
-
 
     Column(
-        modifier = Modifier.fillMaxSize().background(Color(0xFFBBDEFB)).padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFBBDEFB))
+            .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-
-    ){
+    ) {
         Image(
-            painter = painterResource(id= R.drawable.cmc360_logo),
+            painter = painterResource(id = R.drawable.cmc360_logo),
             contentDescription = "logoEmpresa",
-            modifier = Modifier.width(200.dp).height(200.dp).padding(bottom = 30.dp)
+            modifier = Modifier
+                .width(200.dp)
+                .height(200.dp)
+                .padding(bottom = 30.dp)
         )
 
         Text(text = "Correo Institucional")
 
         OutlinedTextField(
             value = username,
-            onValueChange = {nuevoTexto ->
+            onValueChange = { nuevoTexto ->
                 username = nuevoTexto
             },
-            label = {Text("Introduce tu Correo")},
+            label = { Text("Introduce tu Correo") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -70,10 +78,10 @@ fun Login(navController: NavController) {
 
         OutlinedTextField(
             value = password,
-            onValueChange = {nuevoTexto ->
+            onValueChange = { nuevoTexto ->
                 password = nuevoTexto
             },
-            label = {Text("Introduce tu contraseña")},
+            label = { Text("Introduce tu contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
@@ -84,36 +92,50 @@ fun Login(navController: NavController) {
             cargando = isLoading,
             onClick = {
                 if (username.isBlank() || password.isBlank()) {
+                    mensajeError = "Por favor, ingrese su correo y contraseña."
                     modal = true
                 } else {
                     isLoading = true
-                    scope.launch {
-                        delay(2000)
-                        isLoading = true
-                        val editor = sharedPreferences.edit()
-                        editor.putBoolean("isLoggedIn", true)
-                        editor.apply()
+                    usuarioViewModel.validarLogin(
+                        correo = username,
+                        password = password,
+                        onExito = { usuarioEncontrado ->
+                            isLoading = false
+                            val editor = sharedPreferences.edit()
+                            editor.putBoolean("isLoggedIn", true)
+                            editor.putString("correo_usuario", usuarioEncontrado.correo)
+                            editor.apply()
 
-                        navController.navigate("inicio") {
-                            popUpTo("login") { inclusive = true }
+                            navController.navigate("inicio") {
+                                popUpTo("login") { inclusive = true }
+                            }
+                        },
+                        onError = { error ->
+                            isLoading = false
+                            mensajeError = error
+                            modal = true
                         }
-
-                    }
-
+                    )
                 }
             },
             modifier = Modifier.fillMaxWidth()
         )
-        if(modal){
-            androidx.compose.material3.AlertDialog(
+
+        Spacer(modifier = Modifier.height(8.dp))
+        TextButton(onClick = { navController.navigate("registroUsuario") }) {
+            Text("¿No tienes cuenta? Regístrate aquí")
+        }
+
+        if (modal) {
+            AlertDialog(
                 onDismissRequest = { modal = false },
-                title = { Text(text = "Faltan datos.")},
-                    text = { Text(text = "Por favor, ingrese su correo y contraseña.")},
-                    confirmButton = {
-                        Button(onClick = { modal = false }) {
-                            Text(text = "Aceptar")
-                        }
+                title = { Text(text = "Atención") },
+                text = { Text(text = mensajeError) },
+                confirmButton = {
+                    Button(onClick = { modal = false }) {
+                        Text(text = "Aceptar")
                     }
+                }
             )
         }
     }

@@ -1,7 +1,6 @@
 package com.duoc.rackatack.repository
 
 import com.duoc.rackatack.models.Levantamiento
-import com.duoc.rackatack.models.Rack
 import com.duoc.rackatack.remote.ApiService
 import com.duoc.rackatack.remote.RetrofitInstance
 

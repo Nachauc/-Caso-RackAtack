@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.duoc.rackatack.models.Levantamiento
-import com.duoc.rackatack.models.Rack
 import com.duoc.rackatack.repository.LevantamientoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
