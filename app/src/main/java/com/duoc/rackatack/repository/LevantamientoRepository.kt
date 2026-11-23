@@ -25,12 +25,4 @@ class LevantamientoRepository(private val api: ApiService = RetrofitInstance.api
     suspend fun eliminarLevantamiento(id: Int) {
         api.eliminarLevantamiento(id)
     }
-
-    suspend fun obtenerRacks(): List<Rack> {
-        return api.getRacks()
-    }
-
-    suspend fun crearRack(rack: Rack): Rack {
-        return api.crearRack(rack)
-    }
 }

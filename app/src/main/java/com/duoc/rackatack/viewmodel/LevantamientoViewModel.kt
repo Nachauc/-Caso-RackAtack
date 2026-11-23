@@ -16,8 +16,8 @@ class LevantamientoViewModel(private val repository: LevantamientoRepository = L
     private val _levantamientos = MutableStateFlow<List<Levantamiento>>(emptyList())
     val levantamientos: StateFlow<List<Levantamiento>> = _levantamientos
 
-    private val _racks = MutableStateFlow<List<Rack>>(emptyList())
-    val racks: StateFlow<List<Rack>> = _racks
+    private val _mensajeBusqueda = MutableStateFlow<String?>(null)
+    val mensajeBusqueda: StateFlow<String?> = _mensajeBusqueda
 
     var tempRackId: String = ""
     var tempFecha: String = ""
@@ -26,7 +26,6 @@ class LevantamientoViewModel(private val repository: LevantamientoRepository = L
 
     init {
         cargarLevantamientos()
-        cargarRacks()
     }
 
     fun cargarLevantamientos() {
@@ -39,15 +38,6 @@ class LevantamientoViewModel(private val repository: LevantamientoRepository = L
         }
     }
 
-    fun cargarRacks() {
-        viewModelScope.launch {
-            try {
-                _racks.value = repository.obtenerRacks()
-            } catch (e: Exception) {
-
-            }
-        }
-    }
 
     fun guardarLevantamiento(nuevoLevantamiento: Levantamiento) {
         viewModelScope.launch {
@@ -82,6 +72,23 @@ class LevantamientoViewModel(private val repository: LevantamientoRepository = L
 
             }
         }
+    }
+
+    fun buscarLevantamientoPorId(id: Int) {
+        viewModelScope.launch {
+            try {
+                val encontrado = repository.obtenerLevantamientoPorId(id)
+                _levantamientos.value = listOf(encontrado)
+                _mensajeBusqueda.value = null
+            } catch (e: Exception) {
+                _mensajeBusqueda.value = "No se encontró ningún levantamiento con el ID $id"
+            }
+        }
+    }
+
+    fun limpiarBusqueda() {
+        _mensajeBusqueda.value = null
+        cargarLevantamientos()
     }
 
 }

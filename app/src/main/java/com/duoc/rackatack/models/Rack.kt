@@ -7,5 +7,3 @@ data class Rack(
     val encargado: String,
     val capacidad: Int
 )
-
-//HAY QUE MODIFICAR LOS VAL CON LOS NOMBRES QUE HAY EN LA BASE DE DATOS

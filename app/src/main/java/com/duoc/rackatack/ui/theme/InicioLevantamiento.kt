@@ -39,12 +39,14 @@ import androidx.navigation.NavController
 import com.duoc.rackatack.models.Levantamiento
 import com.duoc.rackatack.viewmodel.LevantamientoViewModel
 import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.KeyboardType
 
 
 @Composable
@@ -53,7 +55,10 @@ fun InicioLevantamiento(navController: NavController,
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences("mispreferencias", Context.MODE_PRIVATE)
     val listaLevantamientos by viewModel.levantamientos.collectAsState()
-
+    val mensajeBusqueda by viewModel.mensajeBusqueda.collectAsState()
+    var mostrandoBusqueda by remember { mutableStateOf(false) }
+    var idBuscado by remember { mutableStateOf("") }
+    var filtroActivo by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -89,7 +94,10 @@ fun InicioLevantamiento(navController: NavController,
                     fontWeight = FontWeight.Bold
                 )
                 Row{
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        idBuscado = ""
+                        mostrandoBusqueda = true
+                    })  {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = "Buscar"
@@ -111,12 +119,38 @@ fun InicioLevantamiento(navController: NavController,
                     }
                 }
             }
-            Text(
-                text = "Todos los Levantamientos",
-                modifier = Modifier.padding(16.dp),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = if (filtroActivo) "Resultado de Búsqueda" else "Todos los Levantamientos",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                if (filtroActivo) {
+                    TextButton(onClick = {
+                        filtroActivo = false
+                        viewModel.limpiarBusqueda()
+                    }) {
+                        Text("Ver todos")
+                    }
+                }
+            }
+
+            mensajeBusqueda?.let { error ->
+                Text(
+                    text = error,
+                    color = Color.Red,
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
 
 
             LazyColumn(
@@ -129,7 +163,6 @@ fun InicioLevantamiento(navController: NavController,
                     onEditar = {editado -> item.id?.let{viewModel.actualizarLevantamiento(it,editado)}}
                 )
                 }
-
             }
         }
 
@@ -144,6 +177,42 @@ fun InicioLevantamiento(navController: NavController,
         ) {
             Text("Nuevo Levantamiento +", fontSize = 18.sp)
         }
+    }
+
+    if (mostrandoBusqueda) {
+        AlertDialog(
+            onDismissRequest = { mostrandoBusqueda = false },
+            title = { Text("Buscar Levantamiento") },
+            text = {
+                OutlinedTextField(
+                    value = idBuscado,
+                    onValueChange = { idBuscado = it },
+                    label = { Text("ID numérico en BD (ej: 1)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        val idNumero = idBuscado.toIntOrNull()
+                        if (idNumero != null) {
+                            viewModel.buscarLevantamientoPorId(idNumero)
+                            filtroActivo = true
+                            mostrandoBusqueda = false
+                        }
+                    }
+                ) {
+                    Text("Buscar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { mostrandoBusqueda = false }) {
+                    Text("Cancelar")
+                }
+            }
+        )
     }
 }
 

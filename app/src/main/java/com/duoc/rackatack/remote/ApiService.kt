@@ -29,11 +29,4 @@ interface ApiService {
     @DELETE("levantamiento/{id}")
     suspend fun eliminarLevantamiento(@Path("id") id: Int)
 
-
-    @GET("rack")
-    suspend fun getRacks(): List<Rack>
-
-
-    @POST("rack")
-    suspend fun crearRack(@Body rack: Rack): Rack
 }
