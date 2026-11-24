@@ -134,7 +134,7 @@ fun ReconocimientoAntecedentes(navController: NavController,
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // 2. LAZY COLUMN INFERIOR: Información y Componentes Reconocidos
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -194,7 +194,7 @@ fun ReconocimientoAntecedentes(navController: NavController,
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 3. BOTONES DE ACCIÓN INFERIORES
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -213,7 +213,7 @@ fun ReconocimientoAntecedentes(navController: NavController,
 
             Button(
                 onClick = {
-                    // 1. Crear objeto y enviarlo a Xano
+
                     val nuevoRegistro = Levantamiento(
                         rackId = viewModel.tempRackId,
                         fecha = viewModel.tempFecha,
@@ -223,7 +223,7 @@ fun ReconocimientoAntecedentes(navController: NavController,
                     )
                     viewModel.guardarLevantamiento(nuevoRegistro)
 
-                    // 2. Disparar notificación nativa
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         permisoNotificacionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                     } else {
@@ -234,7 +234,7 @@ fun ReconocimientoAntecedentes(navController: NavController,
                         )
                     }
 
-                    // 3. Volver directamente al Inicio para ver la lista actualizada
+
                     navController.navigate("inicio") {
                         popUpTo("inicio") { inclusive = true }
                     }

@@ -25,7 +25,7 @@ fun mostrarNotificacionLevantamiento(context: Context, titulo: String, mensaje: 
     }
 
     val builder = NotificationCompat.Builder(context, channelId)
-        .setSmallIcon(android.R.drawable.ic_dialog_info) // ACÁ PODEMOS CAMBAIR EL ICONOOO
+        .setSmallIcon(android.R.drawable.ic_dialog_info)
         .setContentTitle(titulo)
         .setContentText(mensaje)
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
