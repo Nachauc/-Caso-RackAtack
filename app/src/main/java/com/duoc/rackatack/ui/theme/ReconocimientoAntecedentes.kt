@@ -105,7 +105,7 @@ fun ReconocimientoAntecedentes(navController: NavController,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.rack),
+                    painter = painterResource(id = R.drawable.rack_foto),
                     contentDescription = "imagen rack",
                     modifier = Modifier
                         .size(100.dp)
